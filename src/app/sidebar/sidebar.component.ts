@@ -10,8 +10,8 @@ export interface RouteInfo {
 }
 
 export const ROUTES: RouteInfo[] = [
-    { path: 'dashboard', title: 'Efettua il pronostico (dash)',  icon: 'ti-pencil-alt', class: '' },
-    { path: 'user', title: 'Regolamento (user)',  icon:'ti-agenda', class: '' },
+    { path: 'dashboard', title: 'Efettua il pronostico',  icon: 'ti-pencil-alt', class: '' },
+    { path: 'user', title: 'Regolamento',  icon:'ti-agenda', class: '' },
 /*    { path: 'table', title: 'Statistiche (table)',  icon:'ti-view-list-alt', class: '' },
     { path: 'typography', title: 'Typography',  icon:'ti-text', class: '' },
     { path: 'icons', title: 'Icons',  icon:'ti-pencil-alt2', class: '' },

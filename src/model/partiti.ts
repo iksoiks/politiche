@@ -25,8 +25,11 @@ export class Pronostico {
         this.sesso = 0;
     }
 
-    getRandomInt(max) {
-        return Math.floor(Math.random() * Math.floor(max));
+    reset(){
+        this.coalizioni.splice(0);
+        this.eta = 0;
+        this.sesso = 0;
+        this.data = new Date();
     }
 
     checkTotale(){      // true se è minore uguale a 100 e maggiore uguale a 0
@@ -39,14 +42,14 @@ export class Pronostico {
         return ((tot <= 100) && (tot >= 0));
     }
 
-    avanzaQualcosa(){   // true se si ha più del 5% a disposizione da mettere
+    arrivatoCento(){
         let tot = 0;
         for(let coalizione of this.coalizioni){
             for(let partito of coalizione.partiti){
                 tot += partito.percentuale;
             }
         }
-        return (tot < 95);
+        return ((tot < 100) && (tot >= 0));
     }
 }
 

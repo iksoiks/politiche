@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {PoliticalService} from "../../service/political.service";
+import {PoliticalService} from "../../../service/political.service";
 
 declare var $:any;
 
@@ -11,7 +11,7 @@ declare var $:any;
 
 export class FixedPluginComponent implements OnInit{
 
-    constructor(protected politicalService: PoliticalService){
+    constructor(public politicalService: PoliticalService){
     }
 
     ngOnInit(){

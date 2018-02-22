@@ -19,7 +19,7 @@ import { MapsComponent }   from './maps/maps.component';
 import { NotificationsComponent }   from './notifications/notifications.component';
 import { UpgradeComponent }   from './upgrade/upgrade.component';
 import {FormsModule} from "@angular/forms";
-import {PoliticalService} from "./service/political.service";
+import {PoliticalService} from "../service/political.service";
 import {HttpClientModule} from "@angular/common/http";
 
 @NgModule({

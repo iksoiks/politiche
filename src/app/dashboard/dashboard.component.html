@@ -1,6 +1,6 @@
     <div class="container-fluid">
         <div class="row">
-            <div class="pronostico" *ngIf="!finito">
+            <div class="pronostico" *ngIf="!politicalService.finito">
                 <div class="col-md-12">
                     <div class="card">
                         <div class="header">
@@ -17,7 +17,7 @@
                     <div class="card">
                         <div class="header">
                             <h4 class="title">Fai Il Tuo Pronostico!</h4>
-                            <p class="category">Vinci un buono Amazon!</p>
+                            <p class="category">Clicca su "Check Parziale" per tenere sempre d'occhio la somma parziale delle percentuali messe!</p>
                         </div>
                         <div class="content">
                             <ul class="list-group">
@@ -50,18 +50,23 @@
                                 </li>
                                 <br>
                             </ul>
-                            <div class="alert alert-warning" *ngIf="politicalService.pronostico.avanzaQualcosa()">
-                                <span><b> Info - </b> Sei ancora di molto sotto il 100%, clicca su "checkParziale" per controllare il totale immesso.</span>
+                            <div class="alert alert-warning" *ngIf="politicalService.pronostico.arrivatoCento()">
+                                <span><b> Info - </b> Devi arrivare all 100%, clicca su "checkParziale" per controllare il totale immesso.</span>
+                            </div>
+                            <div class="alert alert-danger" *ngIf="!politicalService.pronostico.checkTotale()">
+                                <span><b> Attenzione - </b> La somma delle varie percentuali non può superare 100 o essere minore di 0. Clicca su "Check Parziale" per tenere sempre d'occhio la somma</span>
                             </div>
                         </div>
                         <div class="text-center">
-                            <button type="submit" (click)="checkPronostico()" class="btn btn-info btn-fill btn-lg">Invia</button>
+                            <button type="submit" (click)="checkPronostico()"
+                                    class="btn btn-info btn-fill btn-lg"
+                                    [disabled]="(politicalService.pronostico.arrivatoCento() || !politicalService.pronostico.checkTotale())">Invia</button>
                         </div>
                         <br>
                     </div>
                 </div>
             </div>
-            <div class="invio" *ngIf="finito">
+            <div class="invio" *ngIf="politicalService.finito">
                 <div class="col-md-12">
                     <div class="card">
                         <div class="header">
@@ -76,26 +81,26 @@
                                 </div>
                                 <div class="input-group">
                                     <span class="input-group-addon">Conferma Email</span>
-                                    <input type="email" class="form-control"  [(ngModel)]="confermaEmail"
+                                    <input type="email" class="form-control"  [(ngModel)]="politicalService.confermaEmail"
                                            placeholder="prova@bohmail.com" aria-describedby="basic-addon1">
                                 </div>
-                                <div class="alert alert-danger" *ngIf="(politicalService.pronostico.email !== confermaEmail) && !(confermaEmail === '') ">
+                                <div class="alert alert-danger" *ngIf="(politicalService.pronostico.email !== politicalService.confermaEmail) && (politicalService.confermaEmail !== '') ">
                                     <span><b> Attenzione - </b> Le email inserite non coincidono</span>
                                 </div>
-                                <span class="text-muted"> I dati saranno utilizzati esclusivamente per fini statstici, nel rispetto delle leggi sulla privacy.
-                                Lasciaci la tua email in modo da essere contattato in caso di vincita del buono Amazon da 35€.</span>
+                                <p> I dati saranno utilizzati esclusivamente per fini statstici, nel rispetto delle leggi sulla privacy.
+                                La tua email verrà utilizzatta esclusivamente come modo per contattarti in caso di vincita del buono Amazon da 35€.</p>
                                 <hr>
                                 <p> Sesso:</p>
                                 <div class="col-md-offset-1">
                                     <div class="form-check">
                                         <label class="form-check-label">
-                                            <input class="form-check-input" type="radio" name="sessoRadio" [(ngModel)]="politicalService.pronostico.sesso" id="sessoRadios1" value="0">
+                                            <input class="form-check-input" type="radio" name="sessoRadio" [(ngModel)]="politicalService.pronostico.sesso" id="sessoRadios1" value="1">
                                             Maschio
                                         </label>
                                     </div>
                                     <div class="form-check">
                                         <label class="form-check-label">
-                                            <input class="form-check-input" type="radio" name="sessoRadio" [(ngModel)]="politicalService.pronostico.sesso" id="sessoRadios2" value="1">
+                                            <input class="form-check-input" type="radio" name="sessoRadio" [(ngModel)]="politicalService.pronostico.sesso" id="sessoRadios2" value="2">
                                             Femmina
                                         </label>
                                     </div>
@@ -106,42 +111,42 @@
                                     <div class="form-check">
                                         <label class="form-check-label">
                                             <input class="form-check-input" type="radio"
-                                                   [(ngModel)]="politicalService.pronostico.eta" name="etaRadios" id="exampleRadios1" value="0">
+                                                   [(ngModel)]="politicalService.pronostico.eta" name="etaRadios" value="1">
                                             18-24
                                         </label>
                                     </div>
                                     <div class="form-check">
                                         <label class="form-check-label">
                                             <input class="form-check-input" type="radio"
-                                                   [(ngModel)]="politicalService.pronostico.eta" name="etaRadios" id="exampleRadios2" value="1">
+                                                   [(ngModel)]="politicalService.pronostico.eta" name="etaRadios" value="2">
                                             25-34
                                         </label>
                                     </div>
                                     <div class="form-check">
                                         <label class="form-check-label">
                                             <input class="form-check-input" type="radio"
-                                                   [(ngModel)]="politicalService.pronostico.eta" name="etaRadios" id="exampleRadios2" value="2">
+                                                   [(ngModel)]="politicalService.pronostico.eta" name="etaRadios" value="3">
                                             35-44
                                         </label>
                                     </div>
                                     <div class="form-check">
                                         <label class="form-check-label">
                                             <input class="form-check-input" type="radio"
-                                                   [(ngModel)]="politicalService.pronostico.eta" name="etaRadios" id="exampleRadios2" value="3">
+                                                   [(ngModel)]="politicalService.pronostico.eta" name="etaRadios"  value="4">
                                             45-54
                                         </label>
                                     </div>
                                     <div class="form-check">
                                         <label class="form-check-label">
                                             <input class="form-check-input" type="radio"
-                                                   [(ngModel)]="politicalService.pronostico.eta" name="etaRadios" id="exampleRadios2" value="4">
+                                                   [(ngModel)]="politicalService.pronostico.eta" name="etaRadios"  value="5">
                                             55-64
                                         </label>
                                     </div>
                                     <div class="form-check">
                                         <label class="form-check-label">
                                             <input class="form-check-input" type="radio"
-                                                   [(ngModel)]="politicalService.pronostico.eta" name="etaRadios" id="exampleRadios2" value="5">
+                                                   [(ngModel)]="politicalService.pronostico.eta" name="etaRadios"  value="6">
                                             65>
                                         </label>
                                     </div>
@@ -150,17 +155,16 @@
                             </div>
                         </div>
                         <div class="col-md-12">
-                               <div class="card">
-                                   <div class="content">
-                                       <div class="paragraph">In caso di più pronostici inviati con la stessa email verrà preso in considerazione
-                                           l'ultimo pronostico inviato.
-                                       </div>
-                                   </div>
-                               </div>
+                            <div class="card">
+                                <div class="content">
+                                    <p>In caso di più pronostici inviati con la stessa email verrà preso in considerazione
+                                        l'ultimo pronostico inviato.</p>
+                                </div>
+                            </div>
                         </div>
                         <div class="tpbutton btn-toolbar text-center">
-                            <button type="submit" (click)="finito = !finito" class="btn btn-info btn-fill">Indietro</button>
-                            <button type="submit" (click)="inviaPronostico()" class="btn btn-info btn-fill">Invia</button>
+                            <button type="submit" [disabled]="invioInCorso" (click)="politicalService.finito = !politicalService.finito" class="btn btn-info btn-fill">Indietro</button>
+                            <button type="submit" [disabled]="invioInCorso" (click)="inviaPronostico()" class="btn btn-info btn-fill">Invia</button>
                         </div>
                         <br>
                     </div>
