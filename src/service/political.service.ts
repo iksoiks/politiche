@@ -7,7 +7,7 @@ import {Coalizione, Partito} from "model/partiti";
 export class PoliticalService{
   totale: number;
   pronostico: Pronostico;
-  finito: boolean;
+  pageInvia: boolean;
   confermaEmail: string;
 
   constructor(private http: HttpClient ) {
@@ -70,7 +70,7 @@ export class PoliticalService{
   }
 
   public init(){
-      this.finito = false;
+      this.pageInvia = false;
       this.totale = 0;
       this.confermaEmail = '';
       this.pronostico.reset();

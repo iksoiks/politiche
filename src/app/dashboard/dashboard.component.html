@@ -1,175 +1,71 @@
-    <div class="container-fluid">
-        <div class="row">
-            <div class="pronostico" *ngIf="!politicalService.finito">
-                <div class="col-md-12">
-                    <div class="card">
-                        <div class="header">
-                            <h4 class="title">Come Funziona</h4>
-                        </div>
-                        <div class="content">
-                            <div class="paragraph">Inserisci le percentuali di voti dei partiti.
-                                Se indovini, vinci un buono Amazon da 35€
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-12">
-                    <div class="card">
-                        <div class="header">
-                            <h4 class="title">Fai Il Tuo Pronostico!</h4>
-                            <p class="category">Clicca su "Check Parziale" per tenere sempre d'occhio la somma parziale delle percentuali messe!</p>
-                        </div>
-                        <div class="content">
-                            <ul class="list-group">
-                                <li class="list-group-item" *ngFor="let coalizione of politicalService.pronostico.coalizioni; let i = index">
-                                    <div class="card">
-                                        <h4 class="title">{{coalizione.nome}}</h4>
-                                        <br>
-                                        <ul class="list-group">
-                                            <li class="list-group-item" *ngFor="let partito of politicalService.pronostico.coalizioni[i].partiti ">
-                                                <div class="input-group">
-                                                    <div class="avatar">
-                                                        <img [src]="partito.src" alt="Circle Image" class="img-circle img-no-padding img-responsive">
-                                                    </div>
-                                                    <span class="input-group-addon" id="basic-addon1">{{partito.nome}}</span>
-                                                    <input type="number" class="form-control" [(ngModel)]="partito.percentuale"
-                                                           placeholder="Percentuale" aria-describedby="basic-addon1">
-                                                </div>
-                                                <div class="alert alert-danger" *ngIf="partito.percentuale<0">
-                                                    <span><b> Attenzione - </b>Lo so che {{partito.leader}} non è un genio ma addirittura un numero negativo?</span>
-                                                </div>
-                                                <label>{{partito.leader}}</label>
-                                                <div>
-                                                    <button type="button"
-                                                            class="btn btn-info btn-fill btn-sm"
-                                                            (click)="checkParziale()">Check Parziale</button>
-                                                </div>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                </li>
-                                <br>
-                            </ul>
-                            <div class="alert alert-warning" *ngIf="politicalService.pronostico.arrivatoCento()">
-                                <span><b> Info - </b> Devi arrivare all 100%, clicca su "checkParziale" per controllare il totale immesso.</span>
-                            </div>
-                            <div class="alert alert-danger" *ngIf="!politicalService.pronostico.checkTotale()">
-                                <span><b> Attenzione - </b> La somma delle varie percentuali non può superare 100 o essere minore di 0. Clicca su "Check Parziale" per tenere sempre d'occhio la somma</span>
-                            </div>
-                        </div>
-                        <div class="text-center">
-                            <button type="submit" (click)="checkPronostico()"
-                                    class="btn btn-info btn-fill btn-lg"
-                                    [disabled]="(politicalService.pronostico.arrivatoCento() || !politicalService.pronostico.checkTotale())">Invia</button>
-                        </div>
-                        <br>
-                    </div>
-                </div>
-            </div>
-            <div class="invio" *ngIf="politicalService.finito">
-                <div class="col-md-12">
-                    <div class="card">
-                        <div class="header">
-                            <h4 class="title">Info</h4>
-                        </div>
-                        <div class="content">
-                            <div class="card">
-                                <div class="input-group">
-                                    <span class="input-group-addon">Email</span>
-                                    <input type="email" class="form-control" [(ngModel)]="politicalService.pronostico.email"
-                                           placeholder="prova@bohmail.com" aria-describedby="basic-addon1">
-                                </div>
-                                <div class="input-group">
-                                    <span class="input-group-addon">Conferma Email</span>
-                                    <input type="email" class="form-control"  [(ngModel)]="politicalService.confermaEmail"
-                                           placeholder="prova@bohmail.com" aria-describedby="basic-addon1">
-                                </div>
-                                <div class="alert alert-danger" *ngIf="(politicalService.pronostico.email !== politicalService.confermaEmail) && (politicalService.confermaEmail !== '') ">
-                                    <span><b> Attenzione - </b> Le email inserite non coincidono</span>
-                                </div>
-                                <p> I dati saranno utilizzati esclusivamente per fini statstici, nel rispetto delle leggi sulla privacy.
-                                La tua email verrà utilizzatta esclusivamente come modo per contattarti in caso di vincita del buono Amazon da 35€.</p>
-                                <hr>
-                                <p> Sesso:</p>
-                                <div class="col-md-offset-1">
-                                    <div class="form-check">
-                                        <label class="form-check-label">
-                                            <input class="form-check-input" type="radio" name="sessoRadio" [(ngModel)]="politicalService.pronostico.sesso" id="sessoRadios1" value="1">
-                                            Maschio
-                                        </label>
-                                    </div>
-                                    <div class="form-check">
-                                        <label class="form-check-label">
-                                            <input class="form-check-input" type="radio" name="sessoRadio" [(ngModel)]="politicalService.pronostico.sesso" id="sessoRadios2" value="2">
-                                            Femmina
-                                        </label>
-                                    </div>
-                                </div>
-                                <hr>
-                                <p>Range Età:</p>
-                                <div class="col-md-offset-1">
-                                    <div class="form-check">
-                                        <label class="form-check-label">
-                                            <input class="form-check-input" type="radio"
-                                                   [(ngModel)]="politicalService.pronostico.eta" name="etaRadios" value="1">
-                                            18-24
-                                        </label>
-                                    </div>
-                                    <div class="form-check">
-                                        <label class="form-check-label">
-                                            <input class="form-check-input" type="radio"
-                                                   [(ngModel)]="politicalService.pronostico.eta" name="etaRadios" value="2">
-                                            25-34
-                                        </label>
-                                    </div>
-                                    <div class="form-check">
-                                        <label class="form-check-label">
-                                            <input class="form-check-input" type="radio"
-                                                   [(ngModel)]="politicalService.pronostico.eta" name="etaRadios" value="3">
-                                            35-44
-                                        </label>
-                                    </div>
-                                    <div class="form-check">
-                                        <label class="form-check-label">
-                                            <input class="form-check-input" type="radio"
-                                                   [(ngModel)]="politicalService.pronostico.eta" name="etaRadios"  value="4">
-                                            45-54
-                                        </label>
-                                    </div>
-                                    <div class="form-check">
-                                        <label class="form-check-label">
-                                            <input class="form-check-input" type="radio"
-                                                   [(ngModel)]="politicalService.pronostico.eta" name="etaRadios"  value="5">
-                                            55-64
-                                        </label>
-                                    </div>
-                                    <div class="form-check">
-                                        <label class="form-check-label">
-                                            <input class="form-check-input" type="radio"
-                                                   [(ngModel)]="politicalService.pronostico.eta" name="etaRadios"  value="6">
-                                            65>
-                                        </label>
-                                    </div>
-                                </div>
-                                <hr>
-                            </div>
-                        </div>
-                        <div class="col-md-12">
-                            <div class="card">
-                                <div class="content">
-                                    <p>In caso di più pronostici inviati con la stessa email verrà preso in considerazione
-                                        l'ultimo pronostico inviato.</p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="tpbutton btn-toolbar text-center">
-                            <button type="submit" [disabled]="invioInCorso" (click)="politicalService.finito = !politicalService.finito" class="btn btn-info btn-fill">Indietro</button>
-                            <button type="submit" [disabled]="invioInCorso" (click)="inviaPronostico()" class="btn btn-info btn-fill">Invia</button>
-                        </div>
-                        <br>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
+<div class="container-fluid">
+       <div class="row">
+           <div class="pronostico">
+               <div class="col-md-12">
+                   <div class="card">
+                       <div class="header">
+                           <h4 class="title">Come Funziona</h4>
+                       </div>
+                       <div class="content">
+                           <div class="paragraph">Inserisci le percentuali di voti dei partiti.
+                               Se indovini, vinci un buono Amazon da 35€
+                           </div>
+                       </div>
+                   </div>
+               </div>
+               <div class="col-md-12">
+                   <div class="card">
+                       <div class="header">
+                           <h4 class="title">Fai Il Tuo Pronostico!</h4>
+                           <p class="category">Clicca su "Check Parziale" per tenere sempre d'occhio la somma parziale delle percentuali messe!</p>
+                       </div>
+                       <div class="content">
+                           <ul class="list-group">
+                               <li class="list-group-item" *ngFor="let coalizione of politicalService.pronostico.coalizioni; let i = index">
+                                   <div class="card">
+                                       <h4 class="title">{{coalizione.nome}}</h4>
+                                       <br>
+                                       <ul class="list-group">
+                                           <li class="list-group-item" *ngFor="let partito of politicalService.pronostico.coalizioni[i].partiti ">
+                                               <div class="input-group">
+                                                   <div class="avatar">
+                                                       <img [src]="partito.src" alt="Circle Image" class="img-circle img-no-padding img-responsive">
+                                                   </div>
+                                                   <span class="input-group-addon" id="basic-addon1">{{partito.nome}}</span>
+                                                   <input type="number" class="form-control" [(ngModel)]="partito.percentuale"
+                                                          placeholder="Percentuale" aria-describedby="basic-addon1">
+                                               </div>
+                                               <div class="alert alert-danger" *ngIf="partito.percentuale<0">
+                                                   <span><b> Attenzione - </b>Lo so che {{partito.leader}} non è un genio ma addirittura un numero negativo?</span>
+                                               </div>
+                                               <label>{{partito.leader}}</label>
+                                               <div>
+                                                   <button type="button"
+                                                           class="btn btn-info btn-fill btn-sm"
+                                                           (click)="checkParziale()">Check Parziale</button>
+                                               </div>
+                                           </li>
+                                       </ul>
+                                   </div>
+                               </li>
+                               <br>
+                           </ul>
+                           <div class="alert alert-warning" *ngIf="politicalService.pronostico.arrivatoCento()">
+                               <span><b> Info - </b> Devi arrivare all 100%, clicca su "checkParziale" per controllare il totale immesso.</span>
+                           </div>
+                           <div class="alert alert-danger" *ngIf="!politicalService.pronostico.checkTotale()">
+                               <span><b> Attenzione - </b> La somma delle varie percentuali non può superare 100 o essere minore di 0. Clicca su "Check Parziale" per tenere sempre d'occhio la somma</span>
+                           </div>
+                       </div>
+                       <div class="text-center">
+                           <button type="submit" (click)="checkPronostico()"
+                                   class="btn btn-info btn-fill btn-lg"
+                                   [disabled]="(politicalService.pronostico.arrivatoCento() || !politicalService.pronostico.checkTotale())">Invia</button>
+                       </div>
+                       <br>
+                   </div>
+               </div>
+           </div>
+       </div>
+</div>
 

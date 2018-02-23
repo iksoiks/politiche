@@ -12,35 +12,11 @@ declare var $:any;
 })
 
 export class DashboardComponent implements OnInit{
-    public invioInCorso: boolean;
-    constructor(public politicalService: PoliticalService, private router: Router){
+    constructor(public politicalService: PoliticalService, public router: Router){
     }
 
     ngOnInit(){
-        this.invioInCorso = false;
-    }
-
-    inviaPronostico(){
-        if(this.checkData()){
-            this.invioInCorso = true;
-            this.waiting("Invio in corso");
-            console.log(this.politicalService.pronostico);
-            this.invioInCorso = false;  // TEST
-/*            this.politicalService.putPronostico((inviato:boolean) => {
-                if(inviato){
-                    this.wellDone("Pronostico inviato, grazie per aver partecipato");
-                    this.politicalService.init();
-                    this.invioInCorso = false;
-                    this.router.navigateByUrl('user');
-                }
-                else {
-                    this.warning("Problema nell'invio del pronostico, riprovare")
-                }
-            });*/
-        }
-        else{
-            this.warning("Compila tutti i campi")
-        }
+        this.politicalService.pageInvia = false;
     }
 
     private warning(message){
@@ -86,18 +62,12 @@ export class DashboardComponent implements OnInit{
     checkPronostico(){
         this.checkParziale();
         if(!this.politicalService.pronostico.checkTotale()){
-
             this.warning("Occhio alla percentuale totale!")
         }
         else {
+            this.politicalService.pageInvia = true;
             this.router.navigateByUrl('notifications');
         }
-    }
-
-    private checkData(){
-        // controllo che sia una mail non vuota
-        return !((this.politicalService.pronostico.email === '' || this.politicalService.pronostico.email === ' ' || this.politicalService.confermaEmail === '' ) ||
-                this.politicalService.pronostico.sesso === 0 || this.politicalService.pronostico.eta === 0);
     }
 
     checkParziale(){

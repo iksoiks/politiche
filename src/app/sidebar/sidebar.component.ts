@@ -10,7 +10,7 @@ export interface RouteInfo {
 }
 
 export const ROUTES: RouteInfo[] = [
-    { path: 'dashboard', title: 'Efettua il pronostico',  icon: 'ti-pencil-alt', class: '' },
+    { path: 'dashboard', title: 'Effettua il pronostico',  icon: 'ti-pencil-alt', class: '' },
     { path: 'user', title: 'Regolamento',  icon:'ti-agenda', class: '' },
 /*    { path: 'table', title: 'Statistiche (table)',  icon:'ti-view-list-alt', class: '' },
     { path: 'typography', title: 'Typography',  icon:'ti-text', class: '' },

@@ -1,6 +1,6 @@
 <div class="container-fluid">
     <div class="row">
-        <div class="invio" *ngIf="politicalService.finito">
+        <div class="invio">
             <div class="col-md-12">
                 <div class="card">
                     <div class="header">
@@ -97,7 +97,7 @@
                         </div>
                     </div>
                     <div class="tpbutton btn-toolbar text-center">
-                        <button type="submit" [disabled]="invioInCorso" (click)="politicalService.finito = !politicalService.finito" class="btn btn-info btn-fill">Indietro</button>
+                        <button type="submit" [disabled]="invioInCorso" (click)="tornaIndietro()" class="btn btn-info btn-fill">Indietro</button>
                         <button type="submit" [disabled]="invioInCorso" (click)="inviaPronostico()" class="btn btn-info btn-fill">Invia</button>
                     </div>
                     <br>
