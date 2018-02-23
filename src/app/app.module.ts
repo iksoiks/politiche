@@ -13,14 +13,10 @@ import { NguiMapModule} from '@ngui/map';
 import { DashboardComponent }   from './dashboard/dashboard.component';
 import { UserComponent }   from './user/user.component';
 import { TableComponent }   from './table/table.component';
-import { TypographyComponent }   from './typography/typography.component';
-import { IconsComponent }   from './icons/icons.component';
-import { MapsComponent }   from './maps/maps.component';
 import { NotificationsComponent }   from './notifications/notifications.component';
-import { UpgradeComponent }   from './upgrade/upgrade.component';
-import {FormsModule} from "@angular/forms";
-import {PoliticalService} from "../service/political.service";
-import {HttpClientModule} from "@angular/common/http";
+import {FormsModule} from '@angular/forms';
+import {PoliticalService} from '../service/political.service';
+import {HttpClientModule} from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -28,11 +24,7 @@ import {HttpClientModule} from "@angular/common/http";
     DashboardComponent,
     UserComponent,
     TableComponent,
-    TypographyComponent,
-    IconsComponent,
-    MapsComponent,
     NotificationsComponent,
-    UpgradeComponent
   ],
   imports: [
     BrowserModule,

@@ -30,7 +30,7 @@ export class NotificationsComponent implements OnInit{
         if(this.checkData()){
             this.invioInCorso = true;
             this.waiting("Invio in corso");
-            console.log(this.politicalService.pronostico);
+            //console.log(this.politicalService.pronostico);
             this.politicalService.putPronostico((inviato:boolean) => {
                  if(inviato){
                  this.wellDone("Pronostico inviato, grazie per aver partecipato.");
