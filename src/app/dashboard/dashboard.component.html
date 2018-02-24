@@ -4,11 +4,21 @@
                <div class="col-md-12">
                    <div class="card">
                        <div class="header">
-                           <h4 class="title">Come Funziona</h4>
+                           <h4 class="title">Che Fare</h4>
                        </div>
                        <div class="content">
                            <div class="paragraph">Inserisci le percentuali di voti dei partiti.
-                               Se indovini, vinci un buono Amazon da 35€
+                               Se indovini, vinci un buono Amazon da 35€.
+                           </div>
+                       </div>
+                       <div class="header">
+                           <h4 class="title">Le Percentuali</h4>
+                       </div>
+                       <div class="content">
+                           <div class="paragraph">Sopra il 3% si considera solo il numero intero più vicino: <br>
+                               - (ex: 12.4 -> 12 || 12.6 -> 13 || 12.5 -> 13) <br>
+                               Sotto il 3% si considera anche il primo decimale : <br>
+                               - (ex: 2.33 -> 2.3 || 2.36 -> 2.4 || 2.35 -> 2.4)
                            </div>
                        </div>
                    </div>
@@ -17,7 +27,7 @@
                    <div class="card">
                        <div class="header">
                            <h4 class="title">Fai Il Tuo Pronostico!</h4>
-                           <p class="category">Clicca su "Check Parziale" per tenere sempre d'occhio la somma parziale delle percentuali messe!</p>
+                           <p class="category">Tieni sempre d'occhio il totale parziale!</p>
                        </div>
                        <div class="content">
                            <ul class="list-group">
@@ -39,28 +49,23 @@
                                                    <span><b> Attenzione - </b>Lo so che {{partito.leader}} non è un genio ma addirittura un numero negativo?</span>
                                                </div>
                                                <label>{{partito.leader}}</label>
-                                               <div>
-                                                   <button type="button"
-                                                           class="btn btn-info btn-fill btn-sm"
-                                                           (click)="checkParziale()">Check Parziale</button>
-                                               </div>
                                            </li>
                                        </ul>
                                    </div>
                                </li>
                                <br>
                            </ul>
-                           <div class="alert alert-warning" *ngIf="politicalService.pronostico.arrivatoCento()">
+                           <div class="alert alert-warning" *ngIf="politicalService.arrivatoCento()">
                                <span><b> Info - </b> Devi arrivare all 100%, clicca su "checkParziale" per controllare il totale immesso.</span>
                            </div>
-                           <div class="alert alert-danger" *ngIf="!politicalService.pronostico.checkTotale()">
-                               <span><b> Attenzione - </b> La somma delle varie percentuali non può superare 100 o essere minore di 0. Clicca su "Check Parziale" per tenere sempre d'occhio la somma</span>
+                           <div class="alert alert-danger" *ngIf="!politicalService.checkTotale()">
+                               <span><b> Attenzione - </b> Per poter inviare il pronostico la somma delle varie percentuali non può superare 100 o essere minore di 0.</span>
                            </div>
                        </div>
                        <div class="text-center">
                            <button type="submit" (click)="checkPronostico()"
                                    class="btn btn-info btn-fill btn-lg"
-                                   [disabled]="(politicalService.pronostico.arrivatoCento() || !politicalService.pronostico.checkTotale())">Invia</button>
+                                   [disabled]="(politicalService.arrivatoCento() || !politicalService.checkTotale())">Invia</button>
                        </div>
                        <br>
                    </div>

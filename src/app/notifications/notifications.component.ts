@@ -30,17 +30,18 @@ export class NotificationsComponent implements OnInit{
         if(this.checkData()){
             this.invioInCorso = true;
             this.waiting("Invio in corso");
-            //console.log(this.politicalService.pronostico);
+            console.log(this.politicalService.pronostico);
             this.politicalService.putPronostico((inviato:boolean) => {
                  if(inviato){
                  this.wellDone("Pronostico inviato, grazie per aver partecipato.");
                  this.politicalService.init();
                  this.invioInCorso = false;
-                 this.router.navigateByUrl('user');
+                 this.router.navigateByUrl('table');
                  }
                  else {
                  this.warning("Problema nell'invio del pronostico, riprovare o controllare la connessione.");
                  this.invioInCorso = false;
+                 this.router.navigateByUrl('table');
                  }
              });
         }

@@ -45,23 +45,10 @@ export class DashboardComponent implements OnInit{
             }
         });
     }
-    private wellDone(message){
-        $.notify({
-            icon: 'ti-hand-open',
-            message: message
-        },{
-            type: 'success',
-            timer: 2000,
-            placement: {
-                from: "top",
-                align: "center"
-            }
-        });
-    }
 
     checkPronostico(){
         this.checkParziale();
-        if(!this.politicalService.pronostico.checkTotale()){
+        if(!this.politicalService.checkTotale()){
             this.warning("Occhio alla percentuale totale!")
         }
         else {

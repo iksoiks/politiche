@@ -51,6 +51,31 @@ export class PoliticalService{
           }
       }
   }
+  checkTotale() {      // true se è minore uguale a 100 e maggiore uguale a 0
+      let tot = 0;
+      for (let coalizione of this.pronostico.coalizioni) {
+          for (let partito of coalizione.partiti) {
+              tot += partito.percentuale;
+          }
+      }
+      this.totale = tot;
+      return ((tot <= 100) && (tot >= 0));
+  }
+
+    arrivatoCento(){
+        let tot = 0;
+        for(let coalizione of this.pronostico.coalizioni){
+            for(let partito of coalizione.partiti){
+                tot += partito.percentuale;
+            }
+        }
+        return ((tot < 100) && (tot >= 0));
+    }
+
+    private precisionRound(number, precision) {
+        let factor = Math.pow(10, precision);
+        return Math.round(number * factor) / factor;
+    }
 
   putPronostico(callback){
       let jsonPronostico = JSON.stringify(this.pronostico);

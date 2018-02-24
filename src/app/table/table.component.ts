@@ -1,5 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import * as Chartist from 'chartist';
+import {PoliticalService} from '../../service/political.service';
+import {Coalizione, Partito} from '../../model/partiti';
 
 declare interface TableData {
     headerRow: string[];
@@ -12,73 +14,51 @@ declare interface TableData {
     templateUrl: 'table.component.html'
 })
 
-export class TableComponent implements OnInit{
+export class TableComponent implements OnInit, OnDestroy{
+    public tableData1: TableData;
+    public termometro;
+
+    constructor(public polticalService: PoliticalService){
+        this.initTermometroPolitico();
+    }
+
     ngOnInit(){
-        var dataSales = {
-            labels: ['9:00AM', '12:00AM', '3:00PM', '6:00PM', '9:00PM', '12:00PM', '3:00AM', '6:00AM'],
-            series: [
-                [287, 385, 490, 562, 594, 626, 698, 895, 952],
-                [67, 152, 193, 240, 387, 435, 535, 642, 744],
-                [23, 113, 67, 108, 190, 239, 307, 410, 410]
-            ]
-        };
+        // set riepilogo
+        console.log("ngOninit");
+        let data = new Array();
+        let labelpronostico = new Array();
+        let dataPronostico = new Array();
 
-        var optionsSales = {
-            low: 0,
-            high: 1000,
-            showArea: true,
-            height: "245px",
-            axisX: {
-                showGrid: false,
-            },
-            lineSmooth: Chartist.Interpolation.simple({
-                divisor: 3
-            }),
-            showLine: true,
-            showPoint: false,
-        };
+        console.log("politicalService", this.polticalService.pronostico.coalizioni);
+        console.log("termoemtro", this.termometro);
 
-        var responsiveSales: any[] = [
-            ['screen and (max-width: 640px)', {
-                axisX: {
-                    labelInterpolationFnc: function (value) {
-                        return value[0];
+        for(let coalizione of this.polticalService.pronostico.coalizioni){
+            for (let p of coalizione.partiti){
+                data.push([p.nome,p.percentuale, "non disponibile"]);
+                labelpronostico.push(p.nome);
+                dataPronostico.push(p.percentuale);
+            }
+        }
+        let dataTermometro = new Array();
+        let labelTermometro = new Array();
+
+        for(let cTerm of this.termometro){
+            for(let pTerm of cTerm.partiti){
+                labelTermometro.push(pTerm.nome);
+                dataTermometro.push(pTerm.percentuale);
+                for(let d of data){
+                    if(d[0] === pTerm.nome){
+                        d[2] = pTerm.percentuale;
+                        break;
                     }
                 }
-            }]
-        ];
+            }
+        }
 
-        new Chartist.Line('#chartHours', dataSales, optionsSales, responsiveSales);
-
-
-        var data = {
-            labels: ['Jan', 'Feb', 'Mar', 'Apr', 'Mai', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
-            series: [
-                [542, 543, 520, 680, 653, 753, 326, 434, 568, 610, 756, 895],
-                [230, 293, 380, 480, 503, 553, 600, 664, 698, 710, 736, 795]
-            ]
+        this.tableData1 = {
+            headerRow: [ 'Partito', 'Pronostico', 'Sondaggio Uff.' ],
+            dataRows: data
         };
-
-        var options = {
-            seriesBarDistance: 10,
-            axisX: {
-                showGrid: false
-            },
-            height: "245px"
-        };
-
-        var responsiveOptions: any[] = [
-            ['screen and (max-width: 640px)', {
-                seriesBarDistance: 5,
-                axisX: {
-                    labelInterpolationFnc: function (value) {
-                        return value[0];
-                    }
-                }
-            }]
-        ];
-
-        new Chartist.Line('#chartActivity', data, options, responsiveOptions);
 
         var dataPreferences = {
             series: [
@@ -88,7 +68,8 @@ export class TableComponent implements OnInit{
 
         var optionsPreferences = {
             donut: true,
-            donutWidth: 40,
+            donutSolid: true,
+            donutWidth: 80,
             startAngle: 0,
             total: 100,
             showLabel: false,
@@ -97,11 +78,73 @@ export class TableComponent implements OnInit{
             }
         };
 
-        new Chartist.Pie('#chartPreferences', dataPreferences, optionsPreferences);
+        // torta ufficiale
+        new Chartist.Pie('#termometroOfficial', dataPreferences, optionsPreferences);
 
-        new Chartist.Pie('#chartPreferences', {
-            labels: ['62%','32%','6%'],
-            series: [62, 32, 6]
+        new Chartist.Pie('#termometroOfficial', {
+            labels: labelTermometro,
+            series: dataTermometro
         });
+
+        // torta pronostici
+        new Chartist.Pie('#pronostico', dataPreferences, optionsPreferences);
+
+        new Chartist.Pie('#pronostico', {
+            labels: labelpronostico,
+            series: dataPronostico
+        });
+    }
+
+    ngOnDestroy(){
+        this.polticalService.init();
+    }
+
+    private initTermometroPolitico(){
+        this.termometro = new Array<Coalizione>();
+
+        let partito1 = new Partito('Forza It', 'Silvio Berlusconi', '../../assets/img/loghi/FI.jpg', 15.3);
+
+        let partito2 = new Partito('Lega', 'Matteo Salvini', '../../assets/img/loghi/leganord.png', 14.8);
+        let partito3 = new Partito('FDI', 'Giorgia Meloni', '../../assets/img/loghi/Fratelli-dItalia.jpg', 5.5);
+        let partito4 = new Partito('UDC', 'Raffaele Fitto', '../../assets/img/loghi/NCI.jpg', 2);
+
+        let partito5 = new Partito('PD', 'Matteo Renzi', '../../assets/img/loghi/PD.png', 21.8);
+        let partito6 = new Partito('+Europa', 'Emma Bonino', '../../assets/img/loghi/europa.png', 2.1);
+        let partito7 = new Partito('Civica Pop.', 'Beatrice Lorenzin', '../../assets/img/loghi/Lorenzin.jpg', 0.5);
+        let partito8 = new Partito('Insieme', 'Giulio Santagata', '../../assets/img/loghi/Insieme.jpg', 0.7);
+
+        let partito9 = new Partito('M5S', 'Luigi Di Maio', '../../assets/img/loghi/M5S.png', 26.8);
+        let partito10 = new Partito('LEU', 'Pietro Grasso', '../../assets/img/loghi/Leu.jpg', 5.3);
+        let partito11 = new Partito('CP','Simone Di Stefano', '../../assets/img/loghi/Casa_pound.jpg', 1.9);
+        let partito12 = new Partito('PAP','Viola Carofalo', '../../assets/img/loghi/PAP.jpeg', 1.5 );
+        let partito13 = new Partito('FN', 'Roberto Fiore', '../../assets/img/loghi/forza_nuova.jpg', 0.3);
+        let partito14 = new Partito('ALA', 'Denis Verdini', '../../assets/img/loghi/ala.png', 0);
+        let partito15 = new Partito('10 VM','Andrea Dusi', '../../assets/img/loghi/10voltemeglio.jpg', 0);
+        let partito16 = new Partito('Altri', '-', '../../assets/img/loghi/beer-icon.png', 2.3);
+
+        let coalizione1 = new Coalizione('Coalizione Centro-Destra');
+        coalizione1.addPartiti([partito1, partito2, partito3, partito4]);
+        let coalizione2 = new Coalizione('Coalizione Centro-Sinistra');
+        coalizione2.addPartiti([partito5, partito6, partito7, partito8]);
+        let coalizione3 = new Coalizione('Coalizione Movimento 5 Stelle');
+        coalizione3.addPartiti([partito9]);
+        let coalizione4 = new Coalizione('Coalizione Liberi e Uguali');
+        coalizione4.addPartiti([partito10]);
+        let coalizione5 = new Coalizione('Coalizione CasaPound');
+        coalizione5.addPartiti([partito11]);
+        let coalizione6 = new Coalizione('Coalizione Potere al Popolo');
+        coalizione6.addPartiti([partito12]);
+        let coalizione7 = new Coalizione('Coalizione Forza Nuova');
+        coalizione7.addPartiti([partito13]);
+        let coalizione8 = new Coalizione('Coalizione ALA');
+        coalizione8.addPartiti([partito14]);
+        let coalizione9 = new Coalizione('Coalizione 10 Volte Meglio');
+        coalizione9.addPartiti([partito15]);
+        let coalizione10 = new Coalizione('Altri');
+        coalizione10.addPartiti([partito16]);
+
+        this.termometro.push(coalizione2, coalizione1, coalizione3,
+            coalizione4, coalizione5, coalizione6, coalizione7,
+            coalizione8, coalizione9, coalizione10);
     }
 }

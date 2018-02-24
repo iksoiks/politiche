@@ -31,26 +31,6 @@ export class Pronostico {
         this.sesso = 0;
         this.data = new Date();
     }
-
-    checkTotale(){      // true se è minore uguale a 100 e maggiore uguale a 0
-        let tot = 0;
-        for(let coalizione of this.coalizioni){
-            for(let partito of coalizione.partiti){
-                tot += partito.percentuale;
-            }
-        }
-        return ((tot <= 100) && (tot >= 0));
-    }
-
-    arrivatoCento(){
-        let tot = 0;
-        for(let coalizione of this.coalizioni){
-            for(let partito of coalizione.partiti){
-                tot += partito.percentuale;
-            }
-        }
-        return ((tot < 100) && (tot >= 0));
-    }
 }
 
 export class Coalizione {
@@ -76,10 +56,15 @@ export class Partito{
     leader: string;
     src: string;
 
-    constructor(nome, leader, src) {
+    constructor(nome, leader, src, percentuale?:number) {
         this.nome = nome;
         this.leader = leader;
-        this.percentuale = 0;
+        if(percentuale){
+            this.percentuale = percentuale;
+        }
+        else{
+            this.percentuale = 0;
+        }
         this.src = src;
     }
 }

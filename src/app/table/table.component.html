@@ -3,126 +3,81 @@
         <div class="col-md-12">
             <div class="card">
                 <div class="header">
-                    <h4 class="title">Comping Soon!</h4>
-                    <p class="category">Dati Finti</p>
+                    <h4 class="title">Confronti e riepilogo</h4>
                 </div>
                 <div class="content">
-                    <div id="chartHours" class="ct-chart"></div>
+                    <div class="paragraph">Questa pagina contiene il confronto tra i dati da te scelti e l'ulitmo
+                        sondaggio disponibile
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="card">
+                <div class="header">
+                    <h4 class="title">Il tuo Pronostico</h4>
+                    <p class="category">Grafico della percentuali scelte</p>
+                </div>
+                <div class="content">
+                    <div id="pronostico" class="ct-chart ct-perfect-fourth"></div>
+
                     <div class="footer">
                         <div class="chart-legend">
                             <i class="fa fa-circle text-info"></i> Open
-                            <i class="fa fa-circle text-danger"></i> Click
-                            <i class="fa fa-circle text-warning"></i> Click Second Time
+                            <i class="fa fa-circle text-danger"></i> Bounce
+                            <i class="fa fa-circle text-warning"></i> Unsubscribe
                         </div>
                         <hr>
                         <div class="stats">
-                            <i class="ti-reload"></i> Updated 3 minutes ago
+                            <i class="ti-panel"></i>data by You
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-
-            <!--<div class="col-lg-3 col-sm-6">
-                <div class="card">
-                    <div class="content">
-                        <div class="row">
-                            <div class="col-xs-5">
-                                <div class="icon-big icon-warning text-center">
-                                    <i class="ti-server"></i>
-                                </div>
-                            </div>
-                            <div class="col-xs-7">
-                                <div class="numbers">
-                                    <p>Capacity</p>
-                                    105GB
-                                </div>
-                            </div>
+        <div class="col-md-6">
+            <div class="card">
+                <div class="header">
+                    <h4 class="title">Ultimo Sondaggio</h4>
+                    <p class="category">Grafico dell'ultimo sondaggio disponibile</p>
+                </div>
+                <div class="content">
+                    <div id="termometroOfficial" class="ct-chart ct-major-twelfth"></div>
+                    <div class="footer">
+                        <div class="chart-legend">
+                            <i class="fa fa-circle text-info"></i> Open
+                            <i class="fa fa-circle text-danger"></i> Bounce
+                            <i class="fa fa-circle text-warning"></i> Unsubscribe
                         </div>
-                        <div class="footer">
-                            <hr />
-                            <div class="stats">
-                                <i class="ti-reload"></i> Updated now
-                            </div>
+                        <hr>
+                        <div class="stats">
+                            <i class="ti-panel"></i>data by <a href="https://www.termometropolitico.it/">Termometro Politico</a>
                         </div>
                     </div>
                 </div>
             </div>
-            <div class="col-lg-3 col-sm-6">
-                <div class="card">
-                    <div class="content">
-                        <div class="row">
-                            <div class="col-xs-5">
-                                <div class="icon-big icon-success text-center">
-                                    <i class="ti-wallet"></i>
-                                </div>
-                            </div>
-                            <div class="col-xs-7">
-                                <div class="numbers">
-                                    <p>Revenue</p>
-                                    $1,345
-                                </div>
-                            </div>
-                        </div>
-                        <div class="footer">
-                            <hr />
-                            <div class="stats">
-                                <i class="ti-calendar"></i> Last day
-                            </div>
-                        </div>
-                    </div>
+        </div>
+        <div class="col-md-12">
+            <div class="card">
+                <div class="header">
+                    <h4 class="title">Il Tuo Pronostico</h4>
+                    <p class="text-muted">Riepilogo del tuo pronostico</p>
+                </div>
+                <div class="content table-responsive table-full-width">
+                    <table class="table table-striped">
+                        <thead>
+                        <tr>
+                            <th *ngFor="let cell of tableData1.headerRow">{{ cell }}</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr *ngFor="let row of tableData1.dataRows">
+                            <td *ngFor="let cell of row">{{cell}}</td>
+                        </tr>
+                        </tbody>
+                    </table>
                 </div>
             </div>
-            <div class="col-lg-3 col-sm-6">
-                <div class="card">
-                    <div class="content">
-                        <div class="row">
-                            <div class="col-xs-5">
-                                <div class="icon-big icon-danger text-center">
-                                    <i class="ti-pulse"></i>
-                                </div>
-                            </div>
-                            <div class="col-xs-7">
-                                <div class="numbers">
-                                    <p>Errors</p>
-                                    23
-                                </div>
-                            </div>
-                        </div>
-                        <div class="footer">
-                            <hr />
-                            <div class="stats">
-                                <i class="ti-timer"></i> In the last hour
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-3 col-sm-6">
-                <div class="card">
-                    <div class="content">
-                        <div class="row">
-                            <div class="col-xs-5">
-                                <div class="icon-big icon-info text-center">
-                                    <i class="ti-twitter-alt"></i>
-                                </div>
-                            </div>
-                            <div class="col-xs-7">
-                                <div class="numbers">
-                                    <p>Followers</p>
-                                    +45
-                                </div>
-                            </div>
-                        </div>
-                        <div class="footer">
-                            <hr />
-                            <div class="stats">
-                                <i class="ti-reload"></i> Updated now
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>-->
+        </div>
     </div>
 </div>
