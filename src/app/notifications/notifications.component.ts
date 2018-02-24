@@ -20,6 +20,8 @@ export class NotificationsComponent implements OnInit{
         if(!this.politicalService.pageInvia){
             this.router.navigateByUrl('dashboard');
         }
+        const element = document.getElementById('navTop');
+        element.scrollIntoView();
     }
 
     tornaIndietro(){

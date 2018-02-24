@@ -28,6 +28,8 @@ export class TableComponent implements OnInit, OnDestroy{
             this.router.navigateByUrl('dashboard');
         }
         else{
+            const element = document.getElementById('navTop');
+            element.scrollIntoView();
             // set riepilogo
             let data = new Array();
             let labelpronostico = new Array();

@@ -16,6 +16,8 @@ export class DashboardComponent implements OnInit{
     }
 
     ngOnInit(){
+        const element = document.getElementById('navTop');
+        element.scrollIntoView();
         this.politicalService.pageInvia = false;
     }
 
