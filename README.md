@@ -14,5 +14,5 @@ messo su in poco tempo quindi può risultare un po confusionario ma si fa su.
 
 ## Authors
 
-* *Lorenzo Catalli* - *Initial work* - [PurpleBooth](https://github.com/LorCat9)
+* *Lorenzo Catalli* - *Initial work* - [GitHub](https://github.com/LorCat9)
 
