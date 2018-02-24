@@ -10,7 +10,7 @@ E' iniziato per scherzo e poi ho deciso di renderlo aperto a tutti.
 ### Collabora
 
 Se hai qualche idea carina o modifica da proporre fatti avanti! Il tutto è stato 
-messo su in poco tempo quindi può risultare un po confusionario ma si fa su.
+messo su in poco tempo quindi può risultare un po confusionario ma ce la si fa.
 
 ## Authors
 
