@@ -8,5 +8,7 @@ import { Component, OnInit } from '@angular/core';
 
 export class UserComponent implements OnInit{
     ngOnInit(){
+        const element = document.getElementById('navTop');
+        element.scrollIntoView();
     }
 }
