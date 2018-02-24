@@ -13,7 +13,6 @@ export class PoliticalService{
   confermaEmail: string;
 
   constructor(private http: HttpClient ) {
-    console.log("constructor politacalService");
     this.totale = 0;
     this.confermaEmail = '';
     this.pronostico = new Pronostico();
@@ -23,8 +22,7 @@ export class PoliticalService{
   }
 
   getUserInfo(){
-    console.log("Getting User Info 1");
-    this.http.get('http://ipinfo.io/geo').subscribe(        // MAX 1000 AL GIORNO
+    this.http.get('http://ipinfo.io/?token=1674b2123bedcc').subscribe(        // MAX 1000 AL GIORNO
         (data) => {
           this.pronostico.region = data['region'];
           this.pronostico.ip_address = data['ip'];
