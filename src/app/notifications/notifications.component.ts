@@ -34,14 +34,13 @@ export class NotificationsComponent implements OnInit{
             this.politicalService.putPronostico((inviato:boolean) => {
                  if(inviato){
                  this.wellDone("Pronostico inviato, grazie per aver partecipato.");
-                 this.politicalService.init();
                  this.invioInCorso = false;
+                 this.politicalService.pageGrafici = true;
                  this.router.navigateByUrl('table');
                  }
                  else {
                  this.warning("Problema nell'invio del pronostico, riprovare o controllare la connessione.");
                  this.invioInCorso = false;
-                 this.router.navigateByUrl('table');
                  }
              });
         }

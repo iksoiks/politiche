@@ -2,12 +2,14 @@ import {Injectable, OnInit} from '@angular/core';
 import {Pronostico} from "model/partiti";
 import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {Coalizione, Partito} from "model/partiti";
+import {isNullOrUndefined} from "util";
 
 @Injectable()
 export class PoliticalService{
   totale: number;
   pronostico: Pronostico;
   pageInvia: boolean;
+  pageGrafici: boolean;
   confermaEmail: string;
 
   constructor(private http: HttpClient ) {
@@ -24,7 +26,6 @@ export class PoliticalService{
     console.log("Getting User Info 1");
     this.http.get('http://ipinfo.io/geo').subscribe(        // MAX 1000 AL GIORNO
         (data) => {
-          console.log(data);
           this.pronostico.region = data['region'];
           this.pronostico.ip_address = data['ip'];
           this.pronostico.citta = data['city'];
@@ -32,7 +33,6 @@ export class PoliticalService{
         (error) => {
             this.http.get('https://api.ipify.org?format=json').subscribe(
                 (data) => {
-                    console.log(data);
                     this.pronostico.ip_address = data['ip'];
                 },
                 (err) => {
@@ -60,6 +60,16 @@ export class PoliticalService{
       }
       this.totale = tot;
       return ((tot <= 100) && (tot >= 0));
+  }
+
+  checkNulli(){
+      for (let coalizione of this.pronostico.coalizioni) {
+          for (let partito of coalizione.partiti) {
+              if(isNullOrUndefined(partito.percentuale))
+                  return false;
+          }
+      }
+      return true;
   }
 
     arrivatoCento(){
@@ -96,6 +106,7 @@ export class PoliticalService{
 
   public init(){
       this.pageInvia = false;
+      this.pageGrafici = false;
       this.totale = 0;
       this.confermaEmail = '';
       this.pronostico.reset();
@@ -116,7 +127,6 @@ export class PoliticalService{
       let partito11 = new Partito('CP','Simone Di Stefano', '../../assets/img/loghi/Casa_pound.jpg');
       let partito12 = new Partito('PAP','Viola Carofalo', '../../assets/img/loghi/PAP.jpeg');
       let partito13 = new Partito('FN', 'Roberto Fiore', '../../assets/img/loghi/forza_nuova.jpg');
-      let partito14 = new Partito('ALA', 'Denis Verdini', '../../assets/img/loghi/ala.png');
       let partito15 = new Partito('10 VM','Andrea Dusi', '../../assets/img/loghi/10voltemeglio.jpg');
       let partito16 = new Partito('Altri', '-', '../../assets/img/loghi/beer-icon.png');
 
@@ -134,8 +144,6 @@ export class PoliticalService{
       coalizione6.addPartiti([partito12]);
       let coalizione7 = new Coalizione('Coalizione Forza Nuova');
       coalizione7.addPartiti([partito13]);
-      let coalizione8 = new Coalizione('Coalizione ALA');
-      coalizione8.addPartiti([partito14]);
       let coalizione9 = new Coalizione('Coalizione 10 Volte Meglio');
       coalizione9.addPartiti([partito15]);
       let coalizione10 = new Coalizione('Altri');
@@ -143,6 +151,6 @@ export class PoliticalService{
 
       this.pronostico.coalizioni.push(coalizione2, coalizione1, coalizione3,
           coalizione4, coalizione5, coalizione6,
-          coalizione7, coalizione8, coalizione9, coalizione10);
+          coalizione7, coalizione9, coalizione10);
   }
 }

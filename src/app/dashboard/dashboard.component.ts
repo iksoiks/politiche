@@ -48,7 +48,10 @@ export class DashboardComponent implements OnInit{
 
     checkPronostico(){
         this.checkParziale();
-        if(!this.politicalService.checkTotale()){
+        if(!this.politicalService.checkNulli()){
+            this.warning("Hai lasciato qualche campo vuoto!");
+        }
+        else if(!this.politicalService.checkTotale()){
             this.warning("Occhio alla percentuale totale!")
         }
         else {

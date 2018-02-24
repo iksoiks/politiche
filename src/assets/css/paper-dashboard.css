@@ -4000,4 +4000,17 @@ Copyright (c) 2015 Daniel Eden
   .fixed-plugin .dropdown-menu:after {
     display: none;
   }
+
+  .progress-vertical {
+    width: 20px;
+    height: 200px !important;
+    position: relative;
+  }
+  .progress-vertical .bar {
+    width: 100% !important;
+    position: absolute;
+    bottom: 0;
+    border-bottom-left-radius: inherit;
+    border-bottom-right-radius: inherit;
+  }
 }
