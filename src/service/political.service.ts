@@ -57,7 +57,7 @@ export class PoliticalService{
               tot += partito.percentuale;
           }
       }
-      this.totale = tot;
+      this.totale = this.precisionRound(tot, 2);
       return ((tot <= 100) && (tot >= 0));
   }
 

@@ -64,7 +64,7 @@ export class TableComponent implements OnInit, OnDestroy{
             }
 
             this.tableData1 = {
-                headerRow: [ 'Partito', 'Pronostico', 'Sondaggio Uff.' ],
+                headerRow: [ 'Partito', 'Pronostico', 'Sondaggio Bl.' ],
                 dataRows: data
             };
 
