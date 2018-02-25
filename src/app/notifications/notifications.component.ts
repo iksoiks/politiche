@@ -43,6 +43,9 @@ export class NotificationsComponent implements OnInit{
                  else {
                  this.warning("Problema nell'invio del pronostico, riprovare o controllare la connessione.");
                  this.invioInCorso = false;
+/*                 // dev testing only
+                     this.politicalService.pageGrafici = true;
+                     this.router.navigateByUrl('table');*/
                  }
              });
         }
