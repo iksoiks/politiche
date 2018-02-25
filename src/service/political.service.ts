@@ -50,6 +50,7 @@ export class PoliticalService{
           }
       }
   }
+
   checkTotale() {      // true se è minore uguale a 100 e maggiore uguale a 0
       let tot = 0;
       for (let coalizione of this.pronostico.coalizioni) {
@@ -71,7 +72,7 @@ export class PoliticalService{
       return true;
   }
 
-    arrivatoCento(){
+  arrivatoCento(){
         let tot = 0;
         for(let coalizione of this.pronostico.coalizioni){
             for(let partito of coalizione.partiti){
@@ -90,6 +91,8 @@ export class PoliticalService{
       let jsonPronostico = JSON.stringify(this.pronostico);
       let headers = new HttpHeaders().set('Content-Type', 'application/json');
 
+      this.checkRegion();
+
       this.http.put('https://7ezt7iob01.execute-api.eu-west-1.amazonaws.com/dev/pronostico', jsonPronostico,
           {
               headers: headers
@@ -101,6 +104,14 @@ export class PoliticalService{
               callback(false);
       }
       );
+  }
+
+  private checkRegion(){
+      if(this.pronostico.region === '' || isNullOrUndefined(this.pronostico.region)){
+          this.pronostico.region = 'default-region';
+          this.pronostico.citta = 'default-city';
+          this.pronostico.country = 'deafault-country';
+      }
   }
 
   public init(){
