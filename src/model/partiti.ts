@@ -10,6 +10,7 @@ export class Pronostico {
     ip_address: string;
     citta: string;
     email: string;
+    country: string
     eta: rangeEta;
     sesso: sesso;
     data: Date;
@@ -22,6 +23,7 @@ export class Pronostico {
         this.email = '';
         this.eta = 0;
         this.citta = 'default-city';
+        this.country = 'deafault-country';
         this.sesso = 0;
     }
 

@@ -24,6 +24,7 @@ export class PoliticalService{
   getUserInfo(){
     this.http.get('http://ipinfo.io/?token=1674b2123bedcc').subscribe(        // MAX 1000 AL GIORNO
         (data) => {
+          this.pronostico.country = data['country'];
           this.pronostico.region = data['region'];
           this.pronostico.ip_address = data['ip'];
           this.pronostico.citta = data['city'];
