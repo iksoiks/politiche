@@ -52,8 +52,8 @@
                                </li>
                                <br>
                            </ul>
-                           <div class="alert alert-warning" *ngIf="politicalService.arrivatoCento()">
-                               <span><b> Info - </b> Devi arrivare all 100%, clicca su "checkParziale" per controllare il totale immesso.</span>
+                           <div class="alert alert-warning" *ngIf="!politicalService.arrivatoCento()">
+                               <span><b> Info - </b> Devi arrivare all 100%, controlla il quadratino in alto a destra per vedere il totale immesso.</span>
                            </div>
                            <div class="alert alert-danger" *ngIf="!politicalService.checkTotale()">
                                <span><b> Attenzione - </b> Per poter inviare il pronostico la somma delle varie percentuali deve corrispondere al 100%.</span>
@@ -62,7 +62,7 @@
                        <div class="text-center">
                            <button type="submit" (click)="checkPronostico()"
                                    class="btn btn-info btn-fill btn-lg"
-                                   [disabled]="(politicalService.arrivatoCento() || !politicalService.checkTotale())">Invia</button>
+                                   [disabled]="(!politicalService.arrivatoCento() || !politicalService.checkTotale())">Invia</button>
                        </div>
                        <br>
                    </div>

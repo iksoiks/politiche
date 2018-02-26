@@ -79,7 +79,7 @@ export class PoliticalService{
                 tot += partito.percentuale;
             }
         }
-        return ((tot < 100) && (tot >= 0));
+        return !((tot < 100) && (tot >= 0));
     }
 
     private precisionRound(number, precision) {
