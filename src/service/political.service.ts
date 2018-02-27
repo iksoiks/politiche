@@ -24,15 +24,18 @@ export class PoliticalService{
   getUserInfo(){
     this.http.get('http://ipinfo.io/?token=1674b2123bedcc').subscribe(        // MAX 1000 AL GIORNO
         (data) => {
-          this.pronostico.country = data['country'];
-          this.pronostico.region = data['region'];
+          this.pronostico.country = data['country'] || 'default-country';
+          this.pronostico.region = data['region'] || 'default-region';
           this.pronostico.ip_address = data['ip'];
-          this.pronostico.citta = data['city'];
+          this.pronostico.citta = data['city'] || 'default-city';
         },
         (error) => {
             this.http.get('https://api.ipify.org?format=json').subscribe(
                 (data) => {
+                    this.pronostico.country = data['country'] || 'default-country';
+                    this.pronostico.region = data['region'] || 'default-region';
                     this.pronostico.ip_address = data['ip'];
+                    this.pronostico.citta = data['city'] || 'default-city';
                 },
                 (err) => {
                     console.log(err);
@@ -107,7 +110,7 @@ export class PoliticalService{
   }
 
   private checkRegion(){
-      if(this.pronostico.region === '' || isNullOrUndefined(this.pronostico.region)){
+      if (!this.pronostico.region) {
           this.pronostico.region = 'default-region';
           this.pronostico.citta = 'default-city';
           this.pronostico.country = 'deafault-country';
