@@ -17,6 +17,7 @@ import { NotificationsComponent }   from './notifications/notifications.componen
 import {FormsModule} from '@angular/forms';
 import {PoliticalService} from '../service/political.service';
 import {HttpClientModule} from '@angular/common/http';
+import { StatsComponent } from './stats/stats.component';
 
 @NgModule({
   declarations: [
@@ -25,6 +26,7 @@ import {HttpClientModule} from '@angular/common/http';
     UserComponent,
     TableComponent,
     NotificationsComponent,
+    StatsComponent,
   ],
   imports: [
     BrowserModule,

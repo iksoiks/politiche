@@ -1,0 +1,39 @@
+<div class="container-fluid">
+    <div class="row">
+        <div class="statistiche">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="header">
+                        <h4 class="title">Statistiche</h4>
+                    </div>
+                    <div class="content">
+                        <div class="paragraph">
+                            Qui potrai vedere un po' di statistiche
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="header">
+                        <h4 class="title">Filtra</h4>
+                    </div>
+                    <div class="content">
+                        <div class="col-md-offset-1">
+                            <label class="form-check-label">
+                                Filtra per
+                                <select [(ngModel)]="filter">
+                                    <option *ngFor="let region of regions; let i = index" [attr.data-index]="i" value="{{i}}">
+                                        {{region}}
+                                    </option>
+                                </select>
+                            </label>
+                            <input type="text" name="filter" [(ngModel)]="filter">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
